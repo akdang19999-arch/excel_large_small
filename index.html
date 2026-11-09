@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LARGE 함수와 SMALL 함수</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .excel-grid {
+            display: grid;
+            grid-template-columns: 3rem 1fr;
+            border-top: 1px solid #cbd5e1;
+            border-left: 1px solid #cbd5e1;
+            background-color: white;
+        }
+        .excel-header {
+            background-color: #f8fafc;
+            color: #64748b;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #cbd5e1;
+            border-bottom: 1px solid #cbd5e1;
+            height: 3rem;
+        }
+        .excel-cell {
+            border-right: 1px solid #cbd5e1;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .cell-input {
+            width: 100%;
+            height: 100%;
+            padding: 0 1rem;
+            outline: none;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            font-size: 1.125rem;
+            color: #1f2937;
+        }
+        .cell-input:focus {
+            border-color: #8b5cf6;
+            background-color: #f5f3ff;
+        }
+        .k-input {
+            width: 4rem;
+            text-align: center;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .k-input:focus {
+            border-color: #8b5cf6;
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- 헤더 -->
+        <header class="text-center py-6 bg-slate-800 rounded-2xl shadow-md text-white">
+            <h1 class="text-3xl md:text-4xl font-black">LARGE 함수와 SMALL 함수</h1>
+            <p class="text-lg mt-2 text-slate-300">원하는 순위의 값 찾기</p>
+        </header>
+
+        <!-- 개념 설명 영역 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- LARGE 설명 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-8 border-violet-500">
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="text-2xl">🥇</span>
+                    <h2 class="text-2xl font-bold text-violet-600">LARGE</h2>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    선택한 범위에서 <strong>k번째로 큰 값</strong>을 찾습니다.
+                </p>
+                <div class="bg-violet-50 p-3 rounded-lg border border-violet-100 font-mono text-violet-800 font-bold text-center">
+                    =LARGE(범위, k)
+                </div>
+            </div>
+
+            <!-- SMALL 설명 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-8 border-teal-500">
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="text-2xl">🥉</span>
+                    <h2 class="text-2xl font-bold text-teal-600">SMALL</h2>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    선택한 범위에서 <strong>k번째로 작은 값</strong>을 찾습니다.
+                </p>
+                <div class="bg-teal-50 p-3 rounded-lg border border-teal-100 font-mono text-teal-800 font-bold text-center">
+                    =SMALL(범위, k)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 실습 영역 -->
+        <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">인터랙티브 시뮬레이터</h2>
+                    <p class="text-gray-600 text-sm">숫자와 순위(k)를 변경하여 결과를 확인해 보세요.</p>
+                </div>
+                
+                <!-- k값 입력기 -->
+                <div class="flex items-center bg-gray-100 p-3 rounded-xl border border-gray-300 shadow-inner">
+                    <label for="input-k" class="font-bold text-gray-700 mr-3">순위 (k) :</label>
+                    <input type="number" id="input-k" class="k-input py-1" value="2" min="1" max="5">
+                    <span class="ml-2 text-gray-600 font-bold">번째</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 items-stretch">
+                
+                <!-- 엑셀 입력 테이블 -->
+                <div class="w-full md:w-5/12 bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden">
+                    <div class="excel-grid">
+                        <div class="excel-header bg-gray-200 border-b-2 border-gray-400"></div>
+                        <div class="excel-header bg-gray-200 border-b-2 border-gray-400 text-lg">A (입력셀)</div>
+                        
+                        <div class="excel-header">1</div>
+                        <div class="excel-cell"><input type="number" class="cell-input" value="95"></div>
+                        
+                        <div class="excel-header">2</div>
+                        <div class="excel-cell"><input type="number" class="cell-input" value="70"></div>
+                        
+                        <div class="excel-header">3</div>
+                        <div class="excel-cell"><input type="number" class="cell-input" value="85"></div>
+                        
+                        <div class="excel-header">4</div>
+                        <div class="excel-cell"><input type="number" class="cell-input" value="100"></div>
+                        
+                        <div class="excel-header">5</div>
+                        <div class="excel-cell"><input type="number" class="cell-input" value="60"></div>
+                    </div>
+                </div>
+
+                <!-- 결과 디스플레이 -->
+                <div class="w-full md:w-7/12 flex flex-col justify-center gap-6">
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-violet-50 p-5 rounded-xl border border-violet-200 shadow-sm">
+                        <div class="text-center sm:text-left mb-2 sm:mb-0">
+                            <div class="font-bold text-violet-900 text-lg" id="label-large">2번째로 큰 값</div>
+                            <div class="text-sm text-violet-700 font-mono mt-1" id="formula-large">=LARGE(A1:A5, 2)</div>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-black text-violet-600" id="res-large">0</div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-teal-50 p-5 rounded-xl border border-teal-200 shadow-sm">
+                        <div class="text-center sm:text-left mb-2 sm:mb-0">
+                            <div class="font-bold text-teal-900 text-lg" id="label-small">2번째로 작은 값</div>
+                            <div class="text-sm text-teal-700 font-mono mt-1" id="formula-small">=SMALL(A1:A5, 2)</div>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-black text-teal-600" id="res-small">0</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript 로직 -->
+    <script>
+        function calculateRankings() {
+            const inputs = document.querySelectorAll('.cell-input');
+            const kInput = document.getElementById('input-k');
+            let numbers = [];
+
+            // 입력된 값 중 숫자인 것만 배열에 추가
+            inputs.forEach(input => {
+                const value = input.value.trim();
+                if (value !== "" && !isNaN(Number(value))) {
+                    numbers.push(Number(value));
+                }
+            });
+
+            const k = parseInt(kInput.value, 10);
+            
+            const largeLabel = document.getElementById('label-large');
+            const smallLabel = document.getElementById('label-small');
+            const largeFormula = document.getElementById('formula-large');
+            const smallFormula = document.getElementById('formula-small');
+            const largeDisplay = document.getElementById('res-large');
+            const smallDisplay = document.getElementById('res-small');
+
+            // 텍스트 및 수식 업데이트
+            const kText = isNaN(k) ? '?' : k;
+            largeLabel.textContent = `${kText}번째로 큰 값`;
+            smallLabel.textContent = `${kText}번째로 작은 값`;
+            largeFormula.textContent = `=LARGE(A1:A5, ${kText})`;
+            smallFormula.textContent = `=SMALL(A1:A5, ${kText})`;
+
+            // 유효성 검사 (k가 1 이상이고 입력된 숫자 개수보다 작거나 같아야 함)
+            if (numbers.length > 0 && !isNaN(k) && k >= 1 && k <= numbers.length) {
+                // 배열 복사 후 정렬
+                const sortedDesc = [...numbers].sort((a, b) => b - a); // 내림차순 (큰 순서)
+                const sortedAsc = [...numbers].sort((a, b) => a - b);  // 오름차순 (작은 순서)
+                
+                largeDisplay.textContent = sortedDesc[k - 1];
+                smallDisplay.textContent = sortedAsc[k - 1];
+                
+                largeDisplay.classList.remove('text-red-500', 'text-xl');
+                smallDisplay.classList.remove('text-red-500', 'text-xl');
+            } else {
+                // 범위를 벗어나거나 입력값이 부족할 때 (엑셀의 #NUM! 에러 재현)
+                const errorMsg = "#NUM!";
+                largeDisplay.textContent = errorMsg;
+                smallDisplay.textContent = errorMsg;
+                
+                // 에러인 경우 글자 크기와 색상 약간 조정
+                largeDisplay.classList.add('text-red-500', 'text-xl');
+                smallDisplay.classList.add('text-red-500', 'text-xl');
+            }
+        }
+
+        // 모든 입력칸과 k값 입력기에 이벤트 리스너 등록
+        document.querySelectorAll('.cell-input').forEach(input => {
+            input.addEventListener('input', calculateRankings);
+        });
+        document.getElementById('input-k').addEventListener('input', calculateRankings);
+
+        // 페이지 로딩 시 초기값으로 한 번 계산
+        calculateRankings();
+    </script>
+</body>
+</html>
